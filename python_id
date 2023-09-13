@@ -67,3 +67,17 @@ try:
     print("Emails sent successfully to all recipients")
 except Exception as e:
     print("Emails could not be sent:", str(e))
+-----------------------------------------------------------------
+
+try:
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(sender_email, sender_password)
+    
+    text = msg.as_string()
+    server.sendmail(sender_email, recipient_emails, text)  # Pass the list of recipients
+    server.quit()
+    
+    print("Emails sent successfully to all recipients")
+except Exception as e:
+    print("Emails could not be sent:", str(e))
