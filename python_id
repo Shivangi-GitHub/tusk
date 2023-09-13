@@ -50,3 +50,20 @@ for dataset_file_path in dataset_file_paths:
         encoders.encode_base64(part)
         part.add_header('Content-Disposition', f"attachment; filename={dataset_file_path.split('/')[-1]}")
         msg.attach(part)
+--------------------------------------------------------------------------------------------------------
+
+try:
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(sender_email, sender_password)
+
+    for recipient_email in recipient_emails:
+        msg['To'] = recipient_email
+        text = msg.as_string()
+        server.sendmail(sender_email, recipient_email, text)
+        print(f"Email sent successfully to {recipient_email}")
+
+    server.quit()
+    print("Emails sent successfully to all recipients")
+except Exception as e:
+    print("Emails could not be sent:", str(e))
