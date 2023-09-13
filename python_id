@@ -42,3 +42,11 @@ try:
     print("Email sent successfully")
 except Exception as e:
     print("Email could not be sent:", str(e))
+
+for dataset_file_path in dataset_file_paths:
+        attachment = open(dataset_file_path, "rb")
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload((attachment).read())
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', f"attachment; filename={dataset_file_path.split('/')[-1]}")
+        msg.attach(part)
